@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState, useRef } from "react";
+import Comment from "./Comment";
 
-function App() {
+export default function App() {
+  const inputRef = useRef(null);
+  const [cmt, setCmt] = useState("");
+  const [commentList, setCommentList] = useState([]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input
+        ref={inputRef}
+        onChange={(e) => {
+          setCmt(e.target.value);
+        }}
+      />
+      <button
+        onClick={() => {
+          setCommentList([...commentList, cmt]);
+          inputRef.current.value = "";
+        }}
+      >
+        Comment
+      </button>
+      <Comment commentList={commentList} />
     </div>
   );
 }
-
-export default App;
